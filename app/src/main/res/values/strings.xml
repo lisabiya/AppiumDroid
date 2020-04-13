@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">AppiumDroid</string>
+
+    <string name="label">获取联系人</string>
+    <string name="start">开启</string>
+    <string name="description">描述信息</string>
+
+</resources>
