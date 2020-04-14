@@ -16,9 +16,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         btStart.setOnClickListener {
-//            settingAccessibilityInfo()
+            //            settingAccessibilityInfo()
             val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
             startActivity(intent)
+        }
+        btReset.setOnClickListener {
+            GetContactPersonInfoService.record = 1;
+            GetContactPersonInfoService.page = 1;
         }
     }
 
