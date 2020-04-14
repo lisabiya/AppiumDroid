@@ -8,19 +8,10 @@ import android.graphics.Rect
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
-import android.view.View
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
-import android.webkit.WebView
 import android.widget.Toast
 import androidx.core.util.Pair
-import com.blankj.utilcode.util.LogUtils
-import com.blankj.utilcode.util.SPUtils
-import com.debby.appiumdroid.GetContactPersonInfoService
-import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 /**
  * Create by wakfu on 2020/4/13
@@ -29,7 +20,13 @@ class GetContactPersonInfoService : AccessibilityService() {
     companion object {
         var record = 1
         var page = 1
+
+        fun reset() {
+            record = 1
+            page = 1
+        }
     }
+
 
     private var parents: List<AccessibilityNodeInfo>? = null
     private val mMainHandler = Handler(Looper.getMainLooper())
@@ -41,7 +38,7 @@ class GetContactPersonInfoService : AccessibilityService() {
     }
 
     override fun onAccessibilityEvent(event: AccessibilityEvent) {
-        val s = event.className ?: return
+        if (event.className == null) return
         val className = event.className.toString()
         if (!className.startsWith("com.alibaba.android.user")) {
             return
@@ -56,15 +53,13 @@ class GetContactPersonInfoService : AccessibilityService() {
                 }
                 "com.alibaba.android.user.profile.namecard.UserBusinessProfileActivityV2" ->
                     Util.postDelay(500) {
+                        val pack = "com.alibaba.android.rimet:id"
                         val list = arrayListOf(
-                            Pair("昵称", "com.alibaba.android.rimet:id/user_header_full_name"),
-                            Pair(
-                                "公司",
-                                "com.alibaba.android.rimet:id/item_user_profile_cell_title_tv"
-                            ),
-                            Pair("电话", "com.alibaba.android.rimet:id/user_mobile_info_content_tv"),
-                            Pair("标题", "com.alibaba.android.rimet:id/cell_title"),
-                            Pair("名称", "com.alibaba.android.rimet:id/cell_subTitle")
+                            Pair("昵称", "$pack/user_header_full_name"),
+                            Pair("公司", "$pack/item_user_profile_cell_title_tv"),
+                            Pair("电话", "$pack/user_mobile_info_content_tv"),
+                            Pair("标题", "$pack/cell_title"),
+                            Pair("名称", "$pack/cell_subTitle")
                         )
                         getTextInfo(list)
                         record++
@@ -136,6 +131,7 @@ class GetContactPersonInfoService : AccessibilityService() {
         LogUtil.log("当前页面: $record")
         if (count > record) {
             val childInfo = info.getChild(record)
+//            childInfo.findAccessibilityNodeInfosByViewId()
             childInfo.performAction(AccessibilityNodeInfo.ACTION_CLICK)
         } else {
             if (count < 8) {
@@ -153,14 +149,15 @@ class GetContactPersonInfoService : AccessibilityService() {
     private fun getTextInfo(pairList: List<Pair<String, String>>) {
         val nodeInfo = rootInActiveWindow
         if (nodeInfo != null) {
+            val map = ArrayList<Pair<String, String>>()
             for (pair in pairList) {
                 val list = nodeInfo.findAccessibilityNodeInfosByViewId(pair.second)
-                val map = ArrayList<Pair<String, String>>();
                 for (item in list) {
                     map.add(Pair(pair.first, item.text.toString()))
                 }
-                Util.setData("$page-$record", map)
             }
+            Util.setData(map[0].second!!, map)
+
         }
     }
 
@@ -172,11 +169,10 @@ class GetContactPersonInfoService : AccessibilityService() {
             info.performAction(AccessibilityNodeInfo.ACTION_SCROLL_FORWARD)
             LogUtil.log("滚动")
             record = 1
-            page++;
-
-        } else {
-            LogUtil.log("爬取结束")
-            showToast("爬取结束")
+            page++
+            Util.postDelay(1500) {
+                scanListRecord("com.alibaba.android.rimet:id/list_view")
+            }
         }
     }
 
@@ -184,11 +180,11 @@ class GetContactPersonInfoService : AccessibilityService() {
      * 滚动屏幕
      */
     private fun scrollScreen(info: AccessibilityNodeInfo) {
-        val bounds = Rect();
-        info.getBoundsInScreen(bounds);
-        val path = Path();
-        path.moveTo(200f, bounds.bottom - 20f);
-        path.lineTo(200f, bounds.top + 20f);
+        val bounds = Rect()
+        info.getBoundsInScreen(bounds)
+        val path = Path()
+        path.moveTo(200f, bounds.bottom - 20f)
+        path.lineTo(200f, bounds.top + 20f)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             val gestureDescription = GestureDescription.Builder()

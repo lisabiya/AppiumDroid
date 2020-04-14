@@ -5,5 +5,7 @@
     <string name="start">开启</string>
     <string name="reset">重置</string>
     <string name="description">描述信息</string>
+    <string name="list">列表</string>
+    <string name="clear">清除数据</string>
 
 </resources>
