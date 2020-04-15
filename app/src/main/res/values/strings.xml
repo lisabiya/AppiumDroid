@@ -1,11 +1,15 @@
 <resources>
-    <string name="app_name">AppiumDroid</string>
+    <string name="app_name">钉钉通讯录</string>
 
     <string name="label">获取联系人</string>
     <string name="start">开启</string>
     <string name="reset">重置</string>
-    <string name="description">描述信息</string>
-    <string name="list">列表</string>
+    <string name="description">点击上方开启\n1.然后点击进入钉钉通讯录->外部联系人，开启数据爬取\n2.点击app右上角列表图标，查看爬取数据
+    </string>
+    <string name="list">数据列表</string>
     <string name="clear">清除数据</string>
+    <string name="confirm">确定</string>
+
+    <string name="no_data">暂无数据</string>
 
 </resources>

@@ -11,7 +11,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorPrimaryDark"
         android:paddingStart="0dp"
         android:paddingEnd="6dp"
         app:layout_constraintTop_toTopOf="parent"
@@ -40,7 +40,7 @@
             android:id="@+id/btReset"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/corner_round"
             android:text="@string/reset"
             android:textColor="@android:color/white"
@@ -50,12 +50,45 @@
             android:id="@+id/btClear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/corner_round"
             android:text="@string/clear"
             android:textColor="@android:color/white"
             android:textSize="16sp" />
 
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="随机延迟时间（秒）"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/etNumber"
+                android:layout_width="60dp"
+                android:layout_height="40dp"
+                android:padding="4dp"
+                android:background="@drawable/corner_round_white"
+                android:inputType="number" />
+
+            <Button
+                android:id="@+id/btConfirm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:background="@drawable/corner_round"
+                android:text="@string/confirm"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+        </LinearLayout>
     </LinearLayout>
 
 

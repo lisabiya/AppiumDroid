@@ -5,17 +5,20 @@ import android.os.Bundle
 import android.provider.Settings
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.blankj.utilcode.util.SPUtils
-import com.blankj.utilcode.util.ToastUtils
+import androidx.core.content.ContextCompat
+import com.blankj.utilcode.constant.PermissionConstants
+import com.blankj.utilcode.util.*
 import kotlinx.android.synthetic.main.activity_main.*
+import java.io.File
 
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        this.window.decorView.background = ContextCompat.getDrawable(this, R.drawable.bg_white)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        requestStorage()
         btStart.setOnClickListener {
             //            settingAccessibilityInfo()
             val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
@@ -35,6 +38,19 @@ class MainActivity : AppCompatActivity() {
                 .show()
         }
 
+        btConfirm.setOnClickListener {
+            var delayTime = 2;
+            val num = etNumber.text.toString()
+            try {
+                delayTime = num.toInt()
+            } catch (e: Exception) {
+
+            }
+            GetContactPersonInfoService.delayTime = delayTime
+            GetContactPersonInfoService.reset()
+            ToastUtils.showShort("设置延迟成功")
+        }
+
         toolbar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.action_list -> {
@@ -45,6 +61,23 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
+    }
+
+    private fun requestStorage() {
+        PermissionUtils.permission(PermissionConstants.STORAGE)
+            .callback(object : PermissionUtils.FullCallback {
+                override fun onGranted(permissionsGranted: List<String>) {
+                }
+
+                override fun onDenied(
+                    permissionsDeniedForever: List<String>,
+                    permissionsDenied: List<String>
+                ) {
+                    ToastUtils.showShort("需要存储权限")
+                }
+            })
+            .theme { activity -> ScreenUtils.setFullScreen(activity) }
+            .request()
     }
 
 //    private fun settingAccessibilityInfo() {

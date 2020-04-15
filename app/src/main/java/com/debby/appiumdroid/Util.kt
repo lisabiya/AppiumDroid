@@ -21,13 +21,14 @@ fun Util.setData(page: String, map: ArrayList<Pair<String, String>>) {
 }
 
 fun Util.postDelay(delayTime: Long, doSome: () -> Unit) {
+
     Timer().schedule(
         object : TimerTask() {
             override fun run() {
                 doSome()
             }
         },
-        500
+        delayTime
     )
 }
 

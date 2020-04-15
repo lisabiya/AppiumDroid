@@ -8,10 +8,18 @@ import android.graphics.Rect
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
+import android.view.View
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
+import android.webkit.WebView
 import android.widget.Toast
 import androidx.core.util.Pair
+import com.blankj.utilcode.util.GsonUtils
+import com.debby.appiumdroid.bean.Contact
+import org.litepal.crud.callback.SaveCallback
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 /**
  * Create by wakfu on 2020/4/13
@@ -20,6 +28,7 @@ class GetContactPersonInfoService : AccessibilityService() {
     companion object {
         var record = 1
         var page = 1
+        var delayTime = 2
 
         fun reset() {
             record = 1
@@ -48,8 +57,14 @@ class GetContactPersonInfoService : AccessibilityService() {
 
         when (event.eventType) {
             AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED -> when (className) {
-                "com.alibaba.android.user.external.list.ExternalListActivity" -> Util.postDelay(500) {
-                    scanListRecord("com.alibaba.android.rimet:id/list_view")
+                "com.alibaba.android.user.external.list.ExternalListActivity" -> {
+                    var time = 1L;
+                    if (delayTime > 1) {
+                        time = Random().nextInt(delayTime) + 1L
+                    }
+                    Util.postDelay(time * 1000) {
+                        scanListRecord("com.alibaba.android.rimet:id/list_view")
+                    }
                 }
                 "com.alibaba.android.user.profile.namecard.UserBusinessProfileActivityV2" ->
                     Util.postDelay(500) {
@@ -149,15 +164,43 @@ class GetContactPersonInfoService : AccessibilityService() {
     private fun getTextInfo(pairList: List<Pair<String, String>>) {
         val nodeInfo = rootInActiveWindow
         if (nodeInfo != null) {
-            val map = ArrayList<Pair<String, String>>()
+            val dataList = ArrayList<Pair<String, String>>()
+            val contact = Contact()
+            val titleArray = ArrayList<String>()
+            val valueArray = ArrayList<String>()
+            val values = HashMap<String, String>()
+
             for (pair in pairList) {
                 val list = nodeInfo.findAccessibilityNodeInfosByViewId(pair.second)
                 for (item in list) {
-                    map.add(Pair(pair.first, item.text.toString()))
+                    dataList.add(Pair(pair.first, item.text.toString()))
+                    when (pair.first) {
+                        "昵称" -> {
+                            contact.nickName = item.text.toString()
+                        }
+                        "公司" -> {
+                            contact.company = item.text.toString()
+                        }
+                        "电话" -> {
+                            contact.phone = item.text.toString()
+                        }
+                        "标题" -> {
+                            titleArray.add(item.text.toString())
+                        }
+                        "名称" -> {
+                            valueArray.add(item.text.toString())
+                        }
+                    }
                 }
             }
-            Util.setData(map[0].second!!, map)
+            titleArray.forEachIndexed { index, title ->
+                values[title] = valueArray[index]
 
+            }
+            val primaryKey = if (dataList[0].second != null) dataList[0].second!! else ""
+            Util.setData(primaryKey, dataList)
+            contact.values = GsonUtils.toJson(values)
+            contact.saveOrUpdate("nickName=?", primaryKey)
         }
     }
 
@@ -170,7 +213,7 @@ class GetContactPersonInfoService : AccessibilityService() {
             LogUtil.log("滚动")
             record = 1
             page++
-            Util.postDelay(1500) {
+            Util.postDelay(1000) {
                 scanListRecord("com.alibaba.android.rimet:id/list_view")
             }
         }
