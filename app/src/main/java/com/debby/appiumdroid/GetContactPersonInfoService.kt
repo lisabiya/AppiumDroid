@@ -3,6 +3,7 @@ package com.debby.appiumdroid
 import android.accessibilityservice.AccessibilityService
 import android.accessibilityservice.GestureDescription
 import android.accessibilityservice.GestureDescription.StrokeDescription
+import android.app.ActivityManager
 import android.graphics.Path
 import android.graphics.Rect
 import android.os.Build

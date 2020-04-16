@@ -56,6 +56,15 @@
             android:textColor="@android:color/white"
             android:textSize="16sp" />
 
+        <Button
+            android:id="@+id/btStop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/corner_round"
+            android:text="终止进程"
+            android:textColor="@android:color/white"
+            android:textSize="16sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -75,9 +84,9 @@
                 android:id="@+id/etNumber"
                 android:layout_width="60dp"
                 android:layout_height="40dp"
-                android:padding="4dp"
                 android:background="@drawable/corner_round_white"
-                android:inputType="number" />
+                android:inputType="number"
+                android:padding="4dp" />
 
             <Button
                 android:id="@+id/btConfirm"

@@ -1,5 +1,7 @@
 package com.debby.appiumdroid
 
+import android.accessibilityservice.AccessibilityService
+import android.app.ActivityManager
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
@@ -49,6 +51,11 @@ class MainActivity : AppCompatActivity() {
             GetContactPersonInfoService.delayTime = delayTime
             GetContactPersonInfoService.reset()
             ToastUtils.showShort("设置延迟成功")
+        }
+
+        btStop.setOnClickListener {
+            val manager = getSystemService(AccessibilityService.ACTIVITY_SERVICE) as ActivityManager
+            manager.killBackgroundProcesses("me.weishu.leoric:resident")
         }
 
         toolbar.setOnMenuItemClickListener {
