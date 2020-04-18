@@ -19,86 +19,180 @@
         app:title="@string/app_name"
         app:titleTextColor="@android:color/white" />
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="@id/toolbar">
-
-        <Button
-            android:id="@+id/btStart"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/corner_round"
-            android:text="@string/start"
-            android:textColor="@android:color/white"
-            android:textSize="16sp" />
-
-        <Button
-            android:id="@+id/btReset"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/corner_round"
-            android:text="@string/reset"
-            android:textColor="@android:color/white"
-            android:textSize="16sp" />
-
-        <Button
-            android:id="@+id/btClear"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/corner_round"
-            android:text="@string/clear"
-            android:textColor="@android:color/white"
-            android:textSize="16sp" />
-
-        <Button
-            android:id="@+id/btStop"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/corner_round"
-            android:text="终止进程"
-            android:textColor="@android:color/white"
-            android:textSize="16sp" />
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="随机延迟时间（秒）"
-                android:textColor="@color/colorPrimary"
-                android:textSize="16sp" />
-
-            <EditText
-                android:id="@+id/etNumber"
-                android:layout_width="60dp"
-                android:layout_height="40dp"
-                android:background="@drawable/corner_round_white"
-                android:inputType="number"
-                android:padding="4dp" />
+            android:orientation="vertical"
+            android:padding="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="@id/toolbar">
 
             <Button
-                android:id="@+id/btConfirm"
-                android:layout_width="wrap_content"
+                android:id="@+id/btStart"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
                 android:background="@drawable/corner_round"
-                android:text="@string/confirm"
+                android:text="@string/start"
                 android:textColor="@android:color/white"
                 android:textSize="16sp" />
-        </LinearLayout>
-    </LinearLayout>
 
+            <Button
+                android:id="@+id/btReset"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/corner_round"
+                android:text="@string/reset"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/btClear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/corner_round"
+                android:text="@string/clear"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/btDing"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/corner_round"
+                android:text="@string/ding"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:text="-------------------- 配置相关 ----------------------"
+                android:textColor="@color/colorAccent" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="一页显示条数"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/etEnd"
+                    android:layout_width="60dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/corner_round_white"
+                    android:inputType="number"
+                    android:padding="4dp"
+                    android:text="4" />
+
+                <Button
+                    android:id="@+id/btEnd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:background="@drawable/corner_round"
+                    android:text="@string/confirm"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="随机延迟时间（秒）"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/etNumber"
+                    android:layout_width="60dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/corner_round_white"
+                    android:inputType="number"
+                    android:padding="4dp"
+                    android:text="0" />
+
+                <Button
+                    android:id="@+id/btConfirm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:background="@drawable/corner_round"
+                    android:text="@string/confirm"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="跳转到指定页"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/etPage"
+                    android:layout_width="60dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/corner_round_white"
+                    android:inputType="number"
+                    android:padding="4dp"
+                    android:text="0" />
+
+                <Switch
+                    android:id="@+id/stPage"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:checked="false"
+                    android:text="关闭"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvPage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:text="上级记录到第1页"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>

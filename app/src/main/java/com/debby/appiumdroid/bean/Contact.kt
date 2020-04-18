@@ -8,7 +8,10 @@ import org.litepal.crud.LitePalSupport
  */
 class Contact() : LitePalSupport() {
     var nickName: String? = null
+    var authName: String? = null
+    var authTag: String? = null
     var company: String? = null
     var phone: String? = null
     var values: String? = null
+    var tags: String? = null
 }

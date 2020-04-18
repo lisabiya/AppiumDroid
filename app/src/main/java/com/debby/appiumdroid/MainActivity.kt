@@ -1,7 +1,5 @@
 package com.debby.appiumdroid
 
-import android.accessibilityservice.AccessibilityService
-import android.app.ActivityManager
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
@@ -9,9 +7,11 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.blankj.utilcode.constant.PermissionConstants
-import com.blankj.utilcode.util.*
+import com.blankj.utilcode.util.PermissionUtils
+import com.blankj.utilcode.util.SPUtils
+import com.blankj.utilcode.util.ScreenUtils
+import com.blankj.utilcode.util.ToastUtils
 import kotlinx.android.synthetic.main.activity_main.*
-import java.io.File
 
 
 class MainActivity : AppCompatActivity() {
@@ -21,6 +21,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         requestStorage()
+        initView()
+    }
+
+    private fun initView() {
         btStart.setOnClickListener {
             //            settingAccessibilityInfo()
             val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
@@ -29,6 +33,7 @@ class MainActivity : AppCompatActivity() {
         btReset.setOnClickListener {
             GetContactPersonInfoService.reset()
             ToastUtils.showShort("重置数据成功")
+//            settingAccessibilityInfo()
         }
         btClear.setOnClickListener {
             AlertDialog.Builder(this)
@@ -53,9 +58,17 @@ class MainActivity : AppCompatActivity() {
             ToastUtils.showShort("设置延迟成功")
         }
 
-        btStop.setOnClickListener {
-            val manager = getSystemService(AccessibilityService.ACTIVITY_SERVICE) as ActivityManager
-            manager.killBackgroundProcesses("me.weishu.leoric:resident")
+        btEnd.setOnClickListener {
+            var maxRow = 6;
+            val num = etEnd.text.toString()
+            try {
+                maxRow = num.toInt()
+            } catch (e: Exception) {
+
+            }
+            GetContactPersonInfoService.maxRow = maxRow
+            GetContactPersonInfoService.reset()
+            ToastUtils.showShort("设置页面条数成功")
         }
 
         toolbar.setOnMenuItemClickListener {
@@ -68,6 +81,34 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
+
+        btDing.setOnClickListener {
+            val packageManager = packageManager;
+            intent = packageManager.getLaunchIntentForPackage("com.alibaba.android.rimet");
+            if (intent == null) {
+                ToastUtils.showShort("未安装")
+            } else {
+                startActivity(intent);
+            }
+        }
+
+        stPage.setOnCheckedChangeListener { _, isChecked ->
+            GetContactPersonInfoService.bolSkip = isChecked;
+            stPage.text = if (isChecked) "开启" else "关闭"
+            if (isChecked) {
+                var page = 2;
+                val num = etPage.text.toString()
+                try {
+                    page = num.toInt()
+                } catch (e: Exception) {
+
+                }
+                GetContactPersonInfoService.skipPage = page;
+            }
+        }
+
+        tvPage.text = String.format("上级记录到第%d页", Util.getPageCount())
+
     }
 
     private fun requestStorage() {

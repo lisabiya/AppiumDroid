@@ -49,4 +49,6 @@ dependencies {
 
     implementation 'com.blankj:utilcode:1.26.0'
     implementation 'org.litepal.android:java:3.0.0'
+
+    implementation 'com.tencent.bugly:crashreport:3.2.1'
 }

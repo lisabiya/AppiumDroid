@@ -4,6 +4,8 @@
     <string name="label">获取联系人</string>
     <string name="start">开启</string>
     <string name="reset">重置</string>
+    <string name="ding">打开钉钉</string>
+
     <string name="description">点击上方开启\n1.然后点击进入钉钉通讯录->外部联系人，开启数据爬取\n2.点击app右上角列表图标，查看爬取数据
     </string>
     <string name="list">数据列表</string>
